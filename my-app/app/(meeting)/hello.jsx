@@ -6,6 +6,8 @@ import LottieWoman from '../../component/lottieWoman'
 import LottiePeople from '../../component/lottiePeople'
 import { ThemeProvider, ThemeContext } from "../../content/ThemeContext";
 import { useContext } from "react";
+import Living from "../../content/living"
+
 import { Picker } from '@react-native-picker/picker';
 import Animated, {
     useSharedValue,
@@ -39,11 +41,15 @@ const questions = [
     },
     {
         id: '4',
-        question: 'Kaç yaşındasın?'
+        question: 'Boyun kaç cm?'
     },
     {
         id: '5',
         question: 'Nerede yaşıyorsun?'
+    },
+    {
+        id: '6',
+        question: 'Eğitim durumun nedir?'
     }
 
 ];
@@ -59,11 +65,12 @@ export default function Hello() {
         gender: true,
         choose: 0,
         type: 0,
-        age: 0,
-        height: 0,
-        living: '',
-        interstin: [],
-        weight: 0,
+        age: 18,
+        height: 100,
+        country: '',
+        city: '',
+        intersting: [],
+        weight: 25,
         useSmoke: false,
         useAlchol: false,
         haveChild: false,
@@ -115,10 +122,11 @@ export default function Hello() {
     };
 
     const renderItem = ({ item }) => {
+        //CİNSİYET
         if (item.id == "0") {
             return (
                 <View style={{ backgroundColor: 'red', width: WIDTH, justifyContent:'flex-start', alignContent:'center', alignItems:'center', paddingVertical: 10}}>
-                    <Text style={{fontFamily: 'RMM', fontSize: 25, textAlign: 'center'}}>
+                    <Text style={{fontFamily: 'RMM', fontSize: 25, textAlign: 'center', color: colors.tColor}}>
                         {item.question}
                     </Text>
                     <Pressable style={[style.button, {backgroundColor: colors.bColor}]}
@@ -127,6 +135,7 @@ export default function Hello() {
                             changeColor("bColor", Color.man.button);
                             changeColor("iColor", Color.man.input);
                             changeColor("tColor", Color.man.text);
+                            changeColor("btColor", Color.man.btext);
                             handleButtonPress('Erkek', item.id);
                             setMetrics(prevMetrics => ({
                                 ...prevMetrics,
@@ -138,7 +147,7 @@ export default function Hello() {
                         <View style={style.buttonContainer}>
                             <LottieMan />
                             <View style={{width:'50%'}}>
-                                <Text style={{fontSize: 25, textAlign:'center', fontFamily: 'RMM'}}>Erkek</Text>
+                                <Text style={{fontSize: 25, textAlign:'center', fontFamily: 'RMM', color: colors.btColor}}>Erkek</Text>
                             </View>
                         </View>
                     </Pressable>
@@ -148,6 +157,7 @@ export default function Hello() {
                             changeColor("bColor", Color.woman.button);
                             changeColor("iColor", Color.woman.input);
                             changeColor("tColor", Color.woman.text);
+                            changeColor("btColor", Color.woman.btext);
                             handleButtonPress('Kız', item.id);
                             setMetrics(prevMetrics => ({
                                 ...prevMetrics,
@@ -158,17 +168,18 @@ export default function Hello() {
                         <View style={style.buttonContainer}>
                             <LottieWoman />
                             <View style={{width:'50%'}}>
-                                <Text style={{fontSize: 25, fontFamily: 'RMM', textAlign:'center'}}>Kız</Text>
+                                <Text style={{fontSize: 25, fontFamily: 'RMM', textAlign:'center', color: colors.btColor}}>Kız</Text>
                             </View>
                         </View>
                     </Pressable>
                 </View>
             )
         }
+        //YÖNELİM
         if (item.id == "1" && lock[0]) {
             return (
                 <View style={{ backgroundColor:'blue', width: WIDTH, justifyContent:'flex-start', alignContent:'center', alignItems:'center', paddingVertical: 10}}>
-                    <Text style={{fontFamily: 'RMM', fontSize: 25, textAlign: 'center', color: 'white'}}>
+                    <Text style={{fontFamily: 'RMM', fontSize: 25, textAlign: 'center', color: colors.tColor}}>
                         {item.question}
                     </Text>
                     <Pressable style={[style.button, {backgroundColor: colors.bColor}]}
@@ -183,7 +194,7 @@ export default function Hello() {
                         <View style={style.buttonContainer}>
                             <LottieMan />
                             <View style={{width:'50%'}}>
-                                <Text style={{fontSize: 25, textAlign:'center', fontFamily: 'RMM'}}>Erkek</Text>
+                                <Text style={{fontSize: 25, textAlign:'center', fontFamily: 'RMM', color: colors.btColor}}>Erkek</Text>
                             </View>
                         </View>
                     </Pressable>
@@ -199,7 +210,7 @@ export default function Hello() {
                         <View style={style.buttonContainer}>
                             <LottieWoman />
                             <View style={{width:'50%'}}>
-                                <Text style={{fontSize: 25, fontFamily: 'RMM', textAlign:'center'}}>Kız</Text>
+                                <Text style={{fontSize: 25, fontFamily: 'RMM', textAlign:'center', color: colors.btColor}}>Kız</Text>
                             </View>
                         </View>
                     </Pressable>
@@ -208,72 +219,83 @@ export default function Hello() {
                             handleButtonPress('Fark etmez', item.id);
                             setMetrics(prevMetrics => ({
                                 ...prevMetrics,
-                                choose: 1,
+                                choose: 2,
                             }));
                         }}
                     >
                         <View style={style.buttonContainer}>
                             <LottiePeople />
                             <View style={{width:'65%'}}>
-                                <Text style={{fontSize: 25, fontFamily: 'RMM', textAlign:'center'}}>Her ikiside</Text>
+                                <Text style={{fontSize: 25, fontFamily: 'RMM', textAlign:'center', color: colors.btColor}}>Fark Etmez</Text>
                             </View>
                         </View>
                     </Pressable>
                 </View>
             )
         }
+        //İLİŞKİ TÜRÜ
         else if (item.id == "2" && lock[1]) {
             return (
                 <View style={{ backgroundColor:'green', width: WIDTH, justifyContent:'flex-start', alignContent:'center', alignItems:'center', paddingVertical: 10}}>
-                    <Text style={{fontFamily: 'RMM', fontSize: 25, textAlign: 'center'}}>
+                    <Text style={{fontFamily: 'RMM', fontSize: 25, textAlign: 'center', color: colors.tColor}}>
                         {item.question}
                     </Text>
                     <Pressable style={[style.button, {backgroundColor: colors.bColor}]}
                         onPress={()=> {
                             handleButtonPress('Ciddi', item.id);
+                            setMetrics(prevMetrics => ({
+                                ...prevMetrics,
+                                type: 0,
+                            }));
                         }}
                     >
                         <View style={style.buttonContainer}>
-                            <LottieMan />
-                            <View style={{width:'50%'}}>
-                                <Text style={{fontSize: 25, textAlign:'center', fontFamily: 'RMM'}}>Ciddi</Text>
+                            <View style={{width:'100%'}}>
+                                <Text style={{fontSize: 25, textAlign:'center', fontFamily: 'RMM', color: colors.btColor}}>Ciddi</Text>
                             </View>
                         </View>
                     </Pressable>
                     <Pressable style={[style.button, {backgroundColor: colors.bColor}]}
                         onPress={()=> {
                             handleButtonPress('Rahat', item.id);
+                            setMetrics(prevMetrics => ({
+                                ...prevMetrics,
+                                type: 1,
+                            }));
                         }}
                     >
                         <View style={style.buttonContainer}>
-                            <LottieWoman />
-                            <View style={{width:'50%'}}>
-                                <Text style={{fontSize: 25, fontFamily: 'RMM', textAlign:'center'}}>Rahat</Text>
+                            <View style={{width:'100%'}}>
+                                <Text style={{fontSize: 25, fontFamily: 'RMM', textAlign:'center', color: colors.btColor}}>Rahat</Text>
                             </View>
                         </View>
                     </Pressable>
                     <Pressable style={[style.button, {backgroundColor: colors.bColor}]}
                         onPress={()=> {
-                            handleButtonPress('Her ikiside', item.id);
+                            handleButtonPress('Toksik', item.id);
+                            setMetrics(prevMetrics => ({
+                                ...prevMetrics,
+                                type: 2,
+                            }));
                         }}
                     >
                         <View style={style.buttonContainer}>
-                            <LottiePeople />
-                            <View style={{width:'65%'}}>
-                                <Text style={{fontSize: 25, fontFamily: 'RMM', textAlign:'center'}}>Her ikiside</Text>
+                            <View style={{width:'100%'}}>
+                                <Text style={{fontSize: 25, fontFamily: 'RMM', textAlign:'center', color: colors.btColor}}>Toksik</Text>
                             </View>
                         </View>
                     </Pressable>
                 </View>
             )
         }
+        //YAŞ
         else if (item.id == "3" && lock[2]){
             return (
                 <View style={{ backgroundColor:'green', width: WIDTH, justifyContent:'flex-start', alignContent:'center', alignItems:'center', paddingVertical: 10}}>
-                    <Text style={{fontFamily: 'RMM', fontSize: 25, textAlign: 'center'}}>
+                    <Text style={{fontFamily: 'RMM', fontSize: 25, textAlign: 'center', color: colors.tColor}}>
                         {item.question}
                     </Text>
-                    <View style={[style.pickerContainer, { backgroundColor: colors.iColor }]}>
+                    <View style={[style.pickerContainer, { backgroundColor: colors.bColor }]}>
                         <Picker
                             selectedValue={metrics.age}
                             onValueChange={(itemValue) => {
@@ -282,9 +304,9 @@ export default function Hello() {
                                   age: itemValue,
                                 }));
                             }}
-                            style={[style.picker, {color: colors.tColor}]}
+                            style={[style.picker, {color: colors.btColor}]}
                         >
-                            <Picker.Item label="Seçiniz..." value="18" style={{fontSize: 25, fontFamily: 'RMM'}}/>
+                            <Picker.Item label="Seçiniz..." value='18' style={{fontSize: 25, fontFamily: 'RMM'}}/>
                             {Array.from({ length: 81 }, (_, i) => (
                                 <Picker.Item key={i} label={`${18 + i}`} value={parseInt(`${18 + i}`)} style={{fontSize: 25, fontFamily: 'RMM'}}/>
                             ))}
@@ -292,21 +314,91 @@ export default function Hello() {
                     </View>
                         <Pressable style={[style.button, {backgroundColor: colors.bColor}]}
                             onPress={()=> {
-                                handleButtonPress('Rahat', item.id);
+                                handleButtonPress('Yaş', item.id);
                             }}
                         >
                             <View style={style.buttonContainer}>
                                 <View style={{width:'100%'}}>
-                                    <Text style={{fontSize: 20, fontFamily: 'RMM', textAlign:'center'}}>Evet {metrics.age} yaşındayım</Text>
+                                    <Text style={{fontSize: 20, fontFamily: 'RMM', textAlign:'center', color: colors.btColor}}>Evet {metrics.age} yaşındayım</Text>
                                 </View>
                             </View>
                         </Pressable>
                 </View>
             )
         }
+        //BOY
+        else if (item.id == "4" && lock[3]){
+            return (
+                <View style={{ backgroundColor:'green', width: WIDTH, justifyContent:'flex-start', alignContent:'center', alignItems:'center', paddingVertical: 10}}>
+                    <Text style={{fontFamily: 'RMM', fontSize: 25, textAlign: 'center', color: colors.tColor}}>
+                        {item.question}
+                    </Text>
+                    <View style={[style.pickerContainer, { backgroundColor: colors.bColor }]}>
+                        <Picker
+                            selectedValue={metrics.height}
+                            onValueChange={(itemValue) => {
+                                setMetrics(prevMetrics => ({
+                                  ...prevMetrics,
+                                  height: itemValue,
+                                }));
+                            }}
+                            style={[style.picker, {color: colors.btColor}]}
+                        >
+                            <Picker.Item label="Seçiniz..." value="" style={{fontSize: 25, fontFamily: 'RMM'}}/>
+                            {Array.from({ length: 100 }, (_, i) => (
+                                <Picker.Item key={i} label={`${100 + i} cm`} value={parseInt(`${100 + i} cm`)} style={{fontSize: 25, fontFamily: 'RMM'}}/>
+                            ))}
+                        </Picker>
+                    </View>
+                        <Pressable style={[style.button, {backgroundColor: colors.bColor}]}
+                            onPress={()=> {
+                                handleButtonPress('Kilo', item.id);
+                            }}
+                        >
+                            <View style={style.buttonContainer}>
+                                <View style={{width:'100%'}}>
+                                    <Text style={{fontSize: 20, fontFamily: 'RMM', textAlign:'center', color: colors.btColor}}>Evet boyum {metrics.height} cm</Text>
+                                </View>
+                            </View>
+                        </Pressable>
+                </View>
+            )
+        }
+        else if (item.id == "5" && lock[4]){
+            return (
+                <View style={{ backgroundColor:'green', width: WIDTH, justifyContent:'flex-start', alignContent:'center', alignItems:'center', paddingVertical: 10}}>
+                    <Living
+                        setCountry={(country)=> {
+                            setMetrics(prevMetrics => ({
+                                ...prevMetrics,
+                                country: country,
+                                }));
+                                //handleButtonPress('Yer', item.id);
+                            }
+                        }
+                        setCity={(city)=> {
+                            setMetrics(prevMetrics => ({
+                                ...prevMetrics,
+                                city: city,
+                            }));
+                            handleButtonPress('Yer', item.id);
+                        }}
+                    />
+                </View>
+            )
+        }
+        else if (item.id == "6" && lock[5]){
+            return (
+                <View style={{ backgroundColor:'green', width: WIDTH, justifyContent:'flex-start', alignContent:'center', alignItems:'center', paddingVertical: 10}}>
+                    
+                </View>
+            )
+        }
+
+
         return null;
     };
-    console.log(metrics.gender)
+    console.log(metrics)
     return (
     <Animated.View entering={FadeIn} style={[style.container]}>
         <LottieQuestion />
