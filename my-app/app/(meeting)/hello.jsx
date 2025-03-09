@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Pressable, FlatList } from 'react-native'
+import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import LottieMan from '../../component/lottieMan'
 import LottieQuestion from '../../component/lottieQuestion'
@@ -7,7 +7,8 @@ import LottiePeople from '../../component/lottiePeople'
 import { ThemeProvider, ThemeContext } from "../../content/ThemeContext";
 import { useContext } from "react";
 import Living from "../../content/living"
-
+import Habit from "../../content/habbit"
+import Hobby from "../../content/hobby"
 import { Picker } from '@react-native-picker/picker';
 import Animated, {
     useSharedValue,
@@ -45,11 +46,16 @@ const questions = [
     },
     {
         id: '5',
-        question: 'Nerede yaşıyorsun?'
+        question: 'Kaç kilosun?'
     },
     {
         id: '6',
-        question: 'Eğitim durumun nedir?'
+    },
+    {
+        id: '7',
+    },
+    {
+        id:'8',
     }
 
 ];
@@ -67,14 +73,11 @@ export default function Hello() {
         type: 0,
         age: 18,
         height: 100,
+        weight: 25,
         country: '',
         city: '',
         intersting: [],
-        weight: 25,
-        useSmoke: false,
-        useAlchol: false,
-        haveChild: false,
-        havePet: false
+        habits: []
         
     })
     const scrollHandler = useAnimatedScrollHandler({
@@ -125,11 +128,11 @@ export default function Hello() {
         //CİNSİYET
         if (item.id == "0") {
             return (
-                <View style={{ backgroundColor: 'red', width: WIDTH, justifyContent:'flex-start', alignContent:'center', alignItems:'center', paddingVertical: 10}}>
+                <View style={{ backgroundColor: '', width: WIDTH, justifyContent:'flex-start', alignContent:'center', alignItems:'center', paddingVertical: 10}}>
                     <Text style={{fontFamily: 'RMM', fontSize: 25, textAlign: 'center', color: colors.tColor}}>
                         {item.question}
                     </Text>
-                    <Pressable style={[style.button, {backgroundColor: colors.bColor}]}
+                    <TouchableOpacity style={[style.button, {backgroundColor: colors.bColor}]}
                         onPress={()=> {
                             changeColor("bgColor", Color.man.background);
                             changeColor("bColor", Color.man.button);
@@ -150,8 +153,8 @@ export default function Hello() {
                                 <Text style={{fontSize: 25, textAlign:'center', fontFamily: 'RMM', color: colors.btColor}}>Erkek</Text>
                             </View>
                         </View>
-                    </Pressable>
-                    <Pressable style={[style.button, {backgroundColor: colors.bColor}]}
+                    </TouchableOpacity>
+                    <TouchableOpacity style={[style.button, {backgroundColor: colors.bColor}]}
                         onPress={()=> {
                             changeColor("bgColor", Color.woman.background);
                             changeColor("bColor", Color.woman.button);
@@ -171,18 +174,18 @@ export default function Hello() {
                                 <Text style={{fontSize: 25, fontFamily: 'RMM', textAlign:'center', color: colors.btColor}}>Kız</Text>
                             </View>
                         </View>
-                    </Pressable>
+                    </TouchableOpacity>
                 </View>
             )
         }
         //YÖNELİM
         if (item.id == "1" && lock[0]) {
             return (
-                <View style={{ backgroundColor:'blue', width: WIDTH, justifyContent:'flex-start', alignContent:'center', alignItems:'center', paddingVertical: 10}}>
+                <View style={{ backgroundColor:'', width: WIDTH, justifyContent:'flex-start', alignContent:'center', alignItems:'center', paddingVertical: 10}}>
                     <Text style={{fontFamily: 'RMM', fontSize: 25, textAlign: 'center', color: colors.tColor}}>
                         {item.question}
                     </Text>
-                    <Pressable style={[style.button, {backgroundColor: colors.bColor}]}
+                    <TouchableOpacity style={[style.button, {backgroundColor: colors.bColor}]}
                         onPress={()=> {
                             handleButtonPress('Erkek', item.id);
                             setMetrics(prevMetrics => ({
@@ -197,8 +200,8 @@ export default function Hello() {
                                 <Text style={{fontSize: 25, textAlign:'center', fontFamily: 'RMM', color: colors.btColor}}>Erkek</Text>
                             </View>
                         </View>
-                    </Pressable>
-                    <Pressable style={[style.button, {backgroundColor: colors.bColor}]}
+                    </TouchableOpacity>
+                    <TouchableOpacity style={[style.button, {backgroundColor: colors.bColor}]}
                         onPress={()=> {
                             handleButtonPress('Kız', item.id);
                             setMetrics(prevMetrics => ({
@@ -213,8 +216,8 @@ export default function Hello() {
                                 <Text style={{fontSize: 25, fontFamily: 'RMM', textAlign:'center', color: colors.btColor}}>Kız</Text>
                             </View>
                         </View>
-                    </Pressable>
-                    <Pressable style={[style.button, {backgroundColor: colors.bColor}]}
+                    </TouchableOpacity>
+                    <TouchableOpacity style={[style.button, {backgroundColor: colors.bColor}]}
                         onPress={()=> {
                             handleButtonPress('Fark etmez', item.id);
                             setMetrics(prevMetrics => ({
@@ -229,18 +232,18 @@ export default function Hello() {
                                 <Text style={{fontSize: 25, fontFamily: 'RMM', textAlign:'center', color: colors.btColor}}>Fark Etmez</Text>
                             </View>
                         </View>
-                    </Pressable>
+                    </TouchableOpacity>
                 </View>
             )
         }
         //İLİŞKİ TÜRÜ
         else if (item.id == "2" && lock[1]) {
             return (
-                <View style={{ backgroundColor:'green', width: WIDTH, justifyContent:'flex-start', alignContent:'center', alignItems:'center', paddingVertical: 10}}>
+                <View style={{ backgroundColor:'', width: WIDTH, justifyContent:'flex-start', alignContent:'center', alignItems:'center', paddingVertical: 10}}>
                     <Text style={{fontFamily: 'RMM', fontSize: 25, textAlign: 'center', color: colors.tColor}}>
                         {item.question}
                     </Text>
-                    <Pressable style={[style.button, {backgroundColor: colors.bColor}]}
+                    <TouchableOpacity style={[style.button, {backgroundColor: colors.bColor}]}
                         onPress={()=> {
                             handleButtonPress('Ciddi', item.id);
                             setMetrics(prevMetrics => ({
@@ -254,8 +257,8 @@ export default function Hello() {
                                 <Text style={{fontSize: 25, textAlign:'center', fontFamily: 'RMM', color: colors.btColor}}>Ciddi</Text>
                             </View>
                         </View>
-                    </Pressable>
-                    <Pressable style={[style.button, {backgroundColor: colors.bColor}]}
+                    </TouchableOpacity>
+                    <TouchableOpacity style={[style.button, {backgroundColor: colors.bColor}]}
                         onPress={()=> {
                             handleButtonPress('Rahat', item.id);
                             setMetrics(prevMetrics => ({
@@ -269,8 +272,8 @@ export default function Hello() {
                                 <Text style={{fontSize: 25, fontFamily: 'RMM', textAlign:'center', color: colors.btColor}}>Rahat</Text>
                             </View>
                         </View>
-                    </Pressable>
-                    <Pressable style={[style.button, {backgroundColor: colors.bColor}]}
+                    </TouchableOpacity>
+                    <TouchableOpacity style={[style.button, {backgroundColor: colors.bColor}]}
                         onPress={()=> {
                             handleButtonPress('Toksik', item.id);
                             setMetrics(prevMetrics => ({
@@ -284,15 +287,15 @@ export default function Hello() {
                                 <Text style={{fontSize: 25, fontFamily: 'RMM', textAlign:'center', color: colors.btColor}}>Toksik</Text>
                             </View>
                         </View>
-                    </Pressable>
+                    </TouchableOpacity>
                 </View>
             )
         }
         //YAŞ
         else if (item.id == "3" && lock[2]){
             return (
-                <View style={{ backgroundColor:'green', width: WIDTH, justifyContent:'flex-start', alignContent:'center', alignItems:'center', paddingVertical: 10}}>
-                    <Text style={{fontFamily: 'RMM', fontSize: 25, textAlign: 'center', color: colors.tColor}}>
+                <View style={{ backgroundColor:'', width: WIDTH, justifyContent:'flex-start', alignContent:'center', alignItems:'center', paddingVertical: 10}}>
+                    <Text style={{fontFamily: 'RMM', fontSize: 25, textAlign: 'center', color: colors.tColor, marginBottom: 15}}>
                         {item.question}
                     </Text>
                     <View style={[style.pickerContainer, { backgroundColor: colors.bColor }]}>
@@ -312,7 +315,7 @@ export default function Hello() {
                             ))}
                         </Picker>
                     </View>
-                        <Pressable style={[style.button, {backgroundColor: colors.bColor}]}
+                        <TouchableOpacity style={[style.button, {backgroundColor: colors.bColor}]}
                             onPress={()=> {
                                 handleButtonPress('Yaş', item.id);
                             }}
@@ -322,15 +325,15 @@ export default function Hello() {
                                     <Text style={{fontSize: 20, fontFamily: 'RMM', textAlign:'center', color: colors.btColor}}>Evet {metrics.age} yaşındayım</Text>
                                 </View>
                             </View>
-                        </Pressable>
+                        </TouchableOpacity>
                 </View>
             )
         }
         //BOY
         else if (item.id == "4" && lock[3]){
             return (
-                <View style={{ backgroundColor:'green', width: WIDTH, justifyContent:'flex-start', alignContent:'center', alignItems:'center', paddingVertical: 10}}>
-                    <Text style={{fontFamily: 'RMM', fontSize: 25, textAlign: 'center', color: colors.tColor}}>
+                <View style={{ backgroundColor:'', width: WIDTH, justifyContent:'flex-start', alignContent:'center', alignItems:'center', paddingVertical: 10}}>
+                    <Text style={{fontFamily: 'RMM', fontSize: 25, textAlign: 'center', color: colors.tColor, marginBottom:15}}>
                         {item.question}
                     </Text>
                     <View style={[style.pickerContainer, { backgroundColor: colors.bColor }]}>
@@ -350,9 +353,9 @@ export default function Hello() {
                             ))}
                         </Picker>
                     </View>
-                        <Pressable style={[style.button, {backgroundColor: colors.bColor}]}
+                        <TouchableOpacity style={[style.button, {backgroundColor: colors.bColor}]}
                             onPress={()=> {
-                                handleButtonPress('Kilo', item.id);
+                                handleButtonPress('Boy', item.id);
                             }}
                         >
                             <View style={style.buttonContainer}>
@@ -360,13 +363,52 @@ export default function Hello() {
                                     <Text style={{fontSize: 20, fontFamily: 'RMM', textAlign:'center', color: colors.btColor}}>Evet boyum {metrics.height} cm</Text>
                                 </View>
                             </View>
-                        </Pressable>
+                        </TouchableOpacity>
                 </View>
             )
         }
+        //KİLO
         else if (item.id == "5" && lock[4]){
             return (
-                <View style={{ backgroundColor:'green', width: WIDTH, justifyContent:'flex-start', alignContent:'center', alignItems:'center', paddingVertical: 10}}>
+                <View style={{ backgroundColor:'', width: WIDTH,  justifyContent:'flex-start', alignContent:'center', alignItems:'center', paddingVertical: 10}}>
+                    <Text style={{fontFamily: 'RMM', fontSize: 25, textAlign: 'center', color: colors.tColor , marginBottom: 15}}>
+                        {item.question}
+                    </Text>
+                    <View style={[style.pickerContainer, { backgroundColor: colors.bColor }]}>
+                        <Picker
+                            selectedValue={metrics.weight}
+                            onValueChange={(itemValue) => {
+                                setMetrics(prevMetrics => ({
+                                  ...prevMetrics,
+                                  weight: itemValue,
+                                }));
+                            }}
+                            style={[style.picker, {color: colors.btColor}]}
+                        >
+                            <Picker.Item label="Seçiniz..." value="" style={{fontSize: 25, fontFamily: 'RMM'}}/>
+                            {Array.from({ length: 150 }, (_, i) => (
+                                <Picker.Item key={i} label={`${25 + i} kg`} value={parseInt(`${25 + i} kg`)} style={{fontSize: 25, fontFamily: 'RMM'}}/>
+                            ))}
+                        </Picker>
+                    </View>
+                        <TouchableOpacity style={[style.button, {backgroundColor: colors.bColor}]}
+                            onPress={()=> {
+                                handleButtonPress('Kilo', item.id);
+                            }}
+                        >
+                            <View style={style.buttonContainer}>
+                                <View style={{width:'100%'}}>
+                                    <Text style={{fontSize: 20, fontFamily: 'RMM', textAlign:'center', color: colors.btColor}}>Evet {metrics.weight} kiloyum</Text>
+                                </View>
+                            </View>
+                        </TouchableOpacity>
+                </View>
+            )
+        }
+        //YER
+        else if (item.id == "6" && lock[5]){
+            return (
+                <View style={{ backgroundColor:'', width: WIDTH, justifyContent:'flex-start', alignContent:'center', alignItems:'center', paddingVertical: 10}}>
                     <Living
                         setCountry={(country)=> {
                             setMetrics(prevMetrics => ({
@@ -387,32 +429,53 @@ export default function Hello() {
                 </View>
             )
         }
-        else if (item.id == "6" && lock[5]){
+        //İLGİ ALANI
+        else if (item.id == "7"  && lock[6]){
             return (
-                <View style={{ backgroundColor:'green', width: WIDTH, justifyContent:'flex-start', alignContent:'center', alignItems:'center', paddingVertical: 10}}>
-                    
+                <View style={{ backgroundColor:'', width: WIDTH, justifyContent:'flex-start', alignContent:'center', alignItems:'center', paddingVertical: 10}}>
+                    <Hobby 
+                        setHobby={(intersting)=> {
+                            setMetrics(prevMetrics => ({
+                                ...prevMetrics,
+                                intersting: intersting,
+                            }));
+                            handleButtonPress('Yer', item.id);
+                        }}
+                    />
                 </View>
             )
         }
-
-
+        //ALIŞKANLIKLAR
+        else if (item.id == "8"  && lock[7]){
+            return (
+                <View style={{ backgroundColor:'', width: WIDTH, justifyContent:'flex-start', alignContent:'center', alignItems:'center', paddingVertical: 10}}>
+                    <Habit 
+                        setHabit={(habit)=> {
+                            setMetrics(prevMetrics => ({
+                                ...prevMetrics,
+                                habits: habit,
+                            }));
+                            handleButtonPress('Yer', item.id);
+                        }}
+                    />
+                </View>
+            )
+        }
         return null;
     };
-    console.log(metrics)
+    console.log(metrics.habits)
     return (
     <Animated.View entering={FadeIn} style={[style.container]}>
         <LottieQuestion />
         <Animated.FlatList
-            entering={FadeIn}
-            exiting={FadeOut}
             ref={flatListRef}
             data={questions}
             keyExtractor={(item) => item.id.toString()}
             horizontal
-            onScroll={scrollHandler}
-            decelerationRate={1}
-            snapToInterval={WIDTH}
+            decelerationRate={'normal'}
             showsHorizontalScrollIndicator={false}
+            alwaysBounceHorizontal
+            snapToInterval={WIDTH}
             renderItem={renderItem}
             onViewableItemsChanged={onViewableItemsChanged}
             viewabilityConfig={{ viewAreaCoveragePercentThreshold: 50 }}
@@ -424,10 +487,10 @@ export default function Hello() {
     </Animated.View>
     )
 }
-
 const style = StyleSheet.create({
     container: {
         width: WIDTH,
+        height: '100%',
         alignItems: "center",
         justifyContent:'center',
     },
@@ -449,6 +512,7 @@ const style = StyleSheet.create({
         width: '80%',
         backgroundColor: '#656565',
         borderRadius: 10,
+        marginBottom: 10,
         borderWidth: 2,
         borderColor: '#252525',
         overflow: 'hidden',

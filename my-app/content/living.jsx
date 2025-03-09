@@ -141,7 +141,7 @@ const Living = ({ setCountry, setCity }) => {
       style={[
         styles.item, 
         selectedCountry?.country === item.country ? styles.selectedItem : null,
-        { backgroundColor: colors.bColor, borderLeftColor: colors.tcolor }
+        { backgroundColor: colors.bColor, borderLeftColor: colors.tColor }
       ]}
       onPress={() => handleCountrySelect(item)}
     >
@@ -155,7 +155,7 @@ const Living = ({ setCountry, setCity }) => {
       style={[
         styles.item, 
         selectedCity === item ? styles.selectedItem : null,
-        { backgroundColor: colors.bColor, borderLeftColor: colors.tcolor  }
+        { backgroundColor: colors.bColor, borderLeftColor: colors.tColor  }
       ]}
       onPress={() => handleCitySelect(item)}
     >
@@ -164,8 +164,7 @@ const Living = ({ setCountry, setCity }) => {
   );
 
   return (
-    <SafeAreaView style={styles.container}>
-      <StatusBar barStyle="dark-content" />
+    <View style={styles.container}>
       {/* Seçim Özeti */}
       <View style={[styles.selectionSummary, { backgroundColor: colors.bColor }]}>
         <Text style={[styles.summaryText, { color: colors.btColor }]}>
@@ -177,7 +176,7 @@ const Living = ({ setCountry, setCity }) => {
       <View style={[styles.mainContainer]}>
         {/* Ülke Seçimi */}
         <View style={styles.columnContainer}>
-          <Text style={styles.sectionTitle}>Ülke Seçimi</Text>
+          <Text style={[styles.sectionTitle, { color: colors.tColor }]}>Ülke Seçimi</Text>
           <TextInput
             style={[styles.searchInput, { backgroundColor: colors.bColor }]}
             placeholder="Ülke ara..."
@@ -201,7 +200,7 @@ const Living = ({ setCountry, setCity }) => {
 
         {/* Şehir Seçimi */}
         <View style={styles.columnContainer}>
-          <Text style={styles.sectionTitle}>Şehir Seçimi</Text>
+          <Text style={[styles.sectionTitle, { color: colors.tColor }]}>Şehir Seçimi</Text>
           <TextInput
             style={[styles.searchInput, { backgroundColor: colors.bColor }]}
             placeholder="Şehir ara..."
@@ -224,25 +223,25 @@ const Living = ({ setCountry, setCity }) => {
                 windowSize={10}
               />
             ) : (
-              <Text style={[styles.noResultText, { color: colors.btColor }]}>Şehir bulunamadı</Text>
+              <Text style={[styles.noResultText, { color: colors.tColor }]}>Şehir bulunamadı</Text>
             )
           ) : (
-            <Text style={[styles.noResultText, { color: colors.btColor }]}>Önce bir ülke seçin</Text>
+            <Text style={[styles.noResultText, { color: colors.tColor }]}>Önce bir ülke seçin</Text>
           )}
         </View>
       </View>
       
       {error && <Text style={styles.errorText}>{error}</Text>}
-    </SafeAreaView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   // Styles remain unchanged here
   container: {
-    height: 400,
+    flex:1,
     width: '85%',
-    backgroundColor: 'wheat',
+    //backgroundColor: 'wheat',
   },
   mainContainer: {
     flex: 1,
@@ -254,7 +253,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
   },
   selectionSummary: {
-    backgroundColor: 'white',
     padding: 15,
     marginHorizontal: 15,
     marginTop: 15,
@@ -266,36 +264,38 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
   },
   summaryText: {
-    fontSize: 16,
+    fontSize: 14,
     textAlign: 'center',
     fontWeight: 'bold',
   },
   sectionTitle: {
-    fontSize: 18,
+    fontSize: 16,
     fontFamily: 'RMM',
     textAlign: 'center',
     marginBottom: 10,
   },
   searchInput: {
-    backgroundColor: 'white',
     paddingHorizontal: 12,
     paddingVertical: 10,
-    borderRadius: 5,
+    borderTopLeftRadius: 8,
+    borderTopRightRadius: 8,
     marginBottom: 15,
   },
   list: {
     maxHeight: 250,
+    borderBottomLeftRadius: 8,
+    borderBottomRightRadius: 8
   },
   item: {
     paddingVertical: 15,
-    borderBottomWidth: 1,
     borderBottomColor: '#ccc',
+    borderBottomWidth: 1,
     paddingLeft: 10,
     marginBottom: 5,
     borderLeftWidth: 5,
   },
   itemText: {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: '400',
   },
   selectedItem: {
@@ -305,7 +305,7 @@ const styles = StyleSheet.create({
     marginVertical: 20,
   },
   noResultText: {
-    fontSize: 16,
+    fontSize: 14,
     textAlign: 'center',
     marginTop: 20,
   },
