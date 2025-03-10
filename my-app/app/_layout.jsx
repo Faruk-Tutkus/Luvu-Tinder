@@ -45,6 +45,57 @@ function RootLayoutContent() {
           animation: 'slide_from_right',
           animationDuration: 1
         }} 
+        
+      />
+      <Stack.Screen 
+        name="(meeting)/welcome" 
+        options={{ 
+          headerShown: false, 
+          statusBarBackgroundColor: colors.bgColor, 
+          navigationBarColor: colors.bgColor, 
+          animation: 'slide_from_right',
+          animationDuration: 1
+        }} 
+      />
+      <Stack.Screen 
+        name="(meeting)/hello" 
+        options={{ 
+          headerShown: false, 
+          statusBarBackgroundColor: colors.bgColor, 
+          navigationBarColor: colors.bgColor, 
+          animation: 'slide_from_right',
+          animationDuration: 1
+        }} 
+      />
+      <Stack.Screen 
+        name="(auth)/register" 
+        options={{ 
+          headerShown: false, 
+          statusBarBackgroundColor: colors.bgColor, 
+          navigationBarColor: colors.bgColor, 
+          animation: 'slide_from_right',
+          animationDuration: 1
+        }} 
+      />
+      <Stack.Screen 
+        name="(auth)/login" 
+        options={{ 
+          headerShown: false, 
+          statusBarBackgroundColor: colors.bgColor, 
+          navigationBarColor: colors.bgColor, 
+          animation: 'slide_from_right',
+          animationDuration: 1
+        }} 
+      />
+      <Stack.Screen 
+        name="(tabs)" 
+        options={{ 
+          headerShown: false, 
+          statusBarBackgroundColor: colors.bgColor, 
+          navigationBarColor: colors.bgColor, 
+          animation: 'slide_from_right',
+          animationDuration: 1
+        }} 
       />
     </Stack>
   );

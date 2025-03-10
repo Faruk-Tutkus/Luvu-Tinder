@@ -213,6 +213,7 @@ const Hobby = ({ setHobby }) => {
 const styles = StyleSheet.create({
   container: {
     flex:1,
+    width: '90%'
   },
   header: {
     padding: 20,

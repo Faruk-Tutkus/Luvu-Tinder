@@ -20,7 +20,7 @@ const pages = [
     { id: "2", title: "Register", backgroundColor: "transparant" },
 ];
 
-export default function Home() {
+export default function Starting() {
     const arr = ['Yeni insanlarla tanış, eğlen, arkadaşlık kur!', 'Hayatına renk kat, yeni arkadaşlıklar keşfet!', 'Eğlenceli sohbetler, samimi arkadaşlıklar burada!']
     const scrollX = useSharedValue()
     const flatListRef = useRef(null)
@@ -54,7 +54,7 @@ export default function Home() {
       }).current;
     
     return (
-        <Animated.View entering={FadeIn} style={[style.container]}>
+        <Animated.View entering={FadeIn} exiting={FadeOut} style={[style.container]}>
             <LottieHome />
             <Text style={style.text}>{arr[Math.round(Math.random() * (arr.length - 1))]}</Text>
             <Animated.FlatList

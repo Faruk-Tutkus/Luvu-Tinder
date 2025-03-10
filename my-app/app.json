@@ -7,7 +7,7 @@
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
-    "backgroundColor": "transparant",
+    "backgroundColor": "#00000000",
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true
@@ -15,7 +15,7 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "transparant"
+        "backgroundColor": "#00000000"
       }
     },
     "web": {

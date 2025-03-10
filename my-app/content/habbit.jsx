@@ -204,7 +204,7 @@ const Habits = ({ setHabit }) => {
           onPress={handleContinue}
           disabled={selectedCount < MIN_TOTAL}
         >
-          <Text style={[styles.continueButtonText, { color: colors.btColor }]}>Devam Et</Text>
+          <Text style={[styles.continueButtonText, { color: colors.btColor }]}>Bitir</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
@@ -214,6 +214,7 @@ const Habits = ({ setHabit }) => {
 const styles = StyleSheet.create({
   container: {
     flex:1,
+    width: '90%'
   },
   header: {
     padding: 20,

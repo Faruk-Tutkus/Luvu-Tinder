@@ -1,6 +1,6 @@
 const Color = {
     man: {
-        input: '#52575D',
+        input: '#7EACB5',
         button: '#CABFAB',
         background: '#41444B',
         btext: '#252525',

@@ -1,40 +1,38 @@
-import { Text, View, StyleSheet, SafeAreaView, VirtualizedList } from "react-native";
-import LottieLoading from "../component/lottieLoading"
-import Home from "./home"
-import { ThemeProvider, ThemeContext } from "../content/ThemeContext";
-import { useContext } from "react";
-import Hello from "./(meeting)/hello"
-import { useEffect, useState } from "react";
-import Color from '../content/colors'
-import Animated, {
-  useSharedValue,
-  useAnimatedStyle,
-  withSpring,
-  withRepeat,
-  FadeIn, FadeOut,
-  BounceIn,
-  SlideOutDown
-} from 'react-native-reanimated';
+import { View, StyleSheet } from "react-native";
+import LottieLoading from "../component/lottieLoading";
+import { ThemeContext } from "../content/ThemeContext";
+import { useContext, useEffect, useState } from "react";
+import { router } from "expo-router";
+import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
+import Welcome from './(meeting)/welcome'
 export default function Index() {
   const { colors } = useContext(ThemeContext);
-  const [home, setHome] = useState(false)
-  setTimeout(() => {
-    setHome(true)
-  }, 2500);
+  const [welcome, setWelcome] = useState(false);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setWelcome(true);
+    }, 2500);
+
+    return () => clearTimeout(timeout);
+  }, []);
+
   return (
-    <View style={[style.container, { backgroundColor: colors.bgColor }]}>
-      {/* { home === false ? <Animated.View entering={FadeIn} exiting={FadeOut}> <LottieLoading /> </Animated.View> : <Home />} */}
-      {<Hello/>}
+    <View style={[styles.container, { backgroundColor: colors.bgColor }]}>
+      {!welcome ? (
+        <Animated.View entering={FadeIn} exiting={FadeOut}>
+          <LottieLoading />
+        </Animated.View>
+      ) : <Welcome />}
     </View>
   );
 }
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FBF3B9',
-    justifyContent: 'center',
-    alignItems: 'center',
-  }
-
-})
+    backgroundColor: "#FBF3B9",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+});

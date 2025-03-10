@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TextInput, Pressable } from "react-native";
+import { View, Text, StyleSheet, TextInput, Pressable, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
 import Animated, {
   useSharedValue,
@@ -8,7 +8,14 @@ import Animated, {
 import LottieGoogle from "@/component/lottieGoogle";
 import LottieFacebook from "@/component/lottieFacebook";
 import LottieApple from "@/component/lottieApple";
+import { useEffect, useContext } from "react";
+import { ThemeProvider, ThemeContext } from "../../content/ThemeContext";
+import { router } from "expo-router";
 export default function Login() {
+
+
+  const { colors } = useContext(ThemeContext);
+
   const fields = ["email", "password"];
   const [textValues, setTextValues] = useState(
     fields.reduce((acc, key) => {
@@ -47,8 +54,8 @@ export default function Login() {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={{textAlign: 'center', fontFamily: 'RML', fontSize: 25}}>Tekrar Hoşgeldin</Text>
+    <View style={[styles.container, { backgroundColor: colors.bgColor }]}>
+      <Text style={{textAlign: 'center', fontFamily: 'RML', fontSize: 25, marginBottom: 10}}>Tekrar Hoşgeldin</Text>
       {fields.map((key, index) => (
         <Animated.View key={index} style={styles.inputBar}>
           <Animated.Text style={[styles.text, animatedStyles[key]]}>
@@ -69,41 +76,45 @@ export default function Login() {
           />
         </Animated.View>
       ))}
-      <Pressable style={styles.button}>
+      <TouchableOpacity style={styles.button}
+        onPress={()=> {
+          router.navigate('/(tabs)')
+        }}
+      >
         <View>
           <Text style={{ textAlign: "center", fontSize: 20, fontFamily: "RMM" }}>
             Giriş Yap
           </Text>
         </View>
-      </Pressable>
+      </TouchableOpacity>
       <Text style={{fontSize: 20, textDecorationLine: 'underline', fontFamily: 'RMB', marginBottom: 50}}>
         Şifremi Unuttum
       </Text>
-      <Pressable style={styles.button}>
+      <TouchableOpacity style={styles.button}>
         <View style={styles.buttonContainer}>
           <LottieGoogle />
           <Text style={{ textAlign: "center", fontSize: 15, fontFamily: "RMM" }}>
             Google İle Giriş Yap
           </Text>
         </View>
-      </Pressable>
+      </TouchableOpacity>
 
-      <Pressable style={styles.button}>
+      <TouchableOpacity style={styles.button}>
         <View style={styles.buttonContainer}>
           <LottieFacebook />
           <Text style={{ textAlign: "center", fontSize: 15, fontFamily: "RMM" }}>
             Facebook İle Giriş Yap
           </Text>
         </View>
-      </Pressable>
-      <Pressable style={styles.button}>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.button}>
         <View style={styles.buttonContainer}>
         <LottieApple />
           <Text style={{ textAlign: "center", fontSize: 15, fontFamily: "RMM" }}>
             Apple İle Giriş Yap
           </Text>
         </View>
-      </Pressable>
+      </TouchableOpacity>
     </View>
   );
 }

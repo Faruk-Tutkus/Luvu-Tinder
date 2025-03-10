@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, Dimensions } from 'react-native'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import LottieMan from '../../component/lottieMan'
 import LottieQuestion from '../../component/lottieQuestion'
@@ -10,6 +10,7 @@ import Living from "../../content/living"
 import Habit from "../../content/habbit"
 import Hobby from "../../content/hobby"
 import { Picker } from '@react-native-picker/picker';
+import { router } from 'expo-router';
 import Animated, {
     useSharedValue,
     useAnimatedStyle,
@@ -21,7 +22,7 @@ import Animated, {
     useAnimatedScrollHandler
 } from 'react-native-reanimated';
 import Color from '../../content/colors'
-const WIDTH = 400
+const WIDTH = Dimensions.get('screen').width
 
 const questions = [
     {
@@ -240,7 +241,7 @@ export default function Hello() {
         else if (item.id == "2" && lock[1]) {
             return (
                 <View style={{ backgroundColor:'', width: WIDTH, justifyContent:'flex-start', alignContent:'center', alignItems:'center', paddingVertical: 10}}>
-                    <Text style={{fontFamily: 'RMM', fontSize: 25, textAlign: 'center', color: colors.tColor}}>
+                    <Text style={{fontFamily: 'RMM', fontSize: 26, textAlign: 'center', color: colors.tColor}}>
                         {item.question}
                     </Text>
                     <TouchableOpacity style={[style.button, {backgroundColor: colors.bColor}]}
@@ -298,7 +299,7 @@ export default function Hello() {
                     <Text style={{fontFamily: 'RMM', fontSize: 25, textAlign: 'center', color: colors.tColor, marginBottom: 15}}>
                         {item.question}
                     </Text>
-                    <View style={[style.pickerContainer, { backgroundColor: colors.bColor }]}>
+                    <View style={[style.pickerContainer, { backgroundColor: colors.iColor }]}>
                         <Picker
                             selectedValue={metrics.age}
                             onValueChange={(itemValue) => {
@@ -336,7 +337,7 @@ export default function Hello() {
                     <Text style={{fontFamily: 'RMM', fontSize: 25, textAlign: 'center', color: colors.tColor, marginBottom:15}}>
                         {item.question}
                     </Text>
-                    <View style={[style.pickerContainer, { backgroundColor: colors.bColor }]}>
+                    <View style={[style.pickerContainer, { backgroundColor: colors.iColor }]}>
                         <Picker
                             selectedValue={metrics.height}
                             onValueChange={(itemValue) => {
@@ -374,7 +375,7 @@ export default function Hello() {
                     <Text style={{fontFamily: 'RMM', fontSize: 25, textAlign: 'center', color: colors.tColor , marginBottom: 15}}>
                         {item.question}
                     </Text>
-                    <View style={[style.pickerContainer, { backgroundColor: colors.bColor }]}>
+                    <View style={[style.pickerContainer, { backgroundColor: colors.iColor }]}>
                         <Picker
                             selectedValue={metrics.weight}
                             onValueChange={(itemValue) => {
@@ -424,6 +425,9 @@ export default function Hello() {
                                 city: city,
                             }));
                             handleButtonPress('Yer', item.id);
+                            setTimeout(()=> {
+                                handleButtonPress('Yer', item.id);
+                            },500)
                         }}
                     />
                 </View>
@@ -439,14 +443,17 @@ export default function Hello() {
                                 ...prevMetrics,
                                 intersting: intersting,
                             }));
-                            handleButtonPress('Yer', item.id);
+                            handleButtonPress('İlgi', item.id);
+                            setTimeout(()=> {
+                                handleButtonPress('İlgi', item.id);
+                            }, 500)
                         }}
                     />
                 </View>
             )
         }
         //ALIŞKANLIKLAR
-        else if (item.id == "8"  && lock[7]){
+        else if (item.id == "8"){
             return (
                 <View style={{ backgroundColor:'', width: WIDTH, justifyContent:'flex-start', alignContent:'center', alignItems:'center', paddingVertical: 10}}>
                     <Habit 
@@ -455,7 +462,9 @@ export default function Hello() {
                                 ...prevMetrics,
                                 habits: habit,
                             }));
-                            handleButtonPress('Yer', item.id);
+                            setTimeout(()=> {
+                                router.navigate('/(auth)/register')
+                            }, 500)
                         }}
                     />
                 </View>
@@ -465,7 +474,7 @@ export default function Hello() {
     };
     console.log(metrics.habits)
     return (
-    <Animated.View entering={FadeIn} style={[style.container]}>
+    <Animated.View entering={FadeIn} style={[style.container, { backgroundColor: colors.bgColor }]}>
         <LottieQuestion />
         <Animated.FlatList
             ref={flatListRef}
@@ -489,10 +498,12 @@ export default function Hello() {
 }
 const style = StyleSheet.create({
     container: {
-        width: WIDTH,
+        width: '100%',
+        flex:1,
         height: '100%',
         alignItems: "center",
         justifyContent:'center',
+        alignSelf:'center'
     },
     button: {
         width: "75%",
