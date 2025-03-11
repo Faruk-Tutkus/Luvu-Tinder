@@ -6,7 +6,9 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import WaterDropTabBar from '../../component/waterDropTabBar';
 // Import your screens
 
-import index from './index'
+import Luvu from './luvu'
+import Comment from './comment'
+import Profile from './profile'
 
 const Tab = createBottomTabNavigator();
 
@@ -20,9 +22,9 @@ export default function App() {
           headerShown: false,
         }}
       >
-        <Tab.Screen name="(tabs)/index" component={index}/>
-        <Tab.Screen name="index" component={index}/>
-        <Tab.Screen name="index2" component={index}/>
+        <Tab.Screen name="luvu" component={Luvu}/>
+        <Tab.Screen name="comment" component={Comment}/>
+        <Tab.Screen name="profile" component={Profile}/>
       </Tab.Navigator>
     </NavigationContainer>
     </NavigationIndependentTree>

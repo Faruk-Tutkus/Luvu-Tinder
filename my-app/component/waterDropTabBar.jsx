@@ -8,30 +8,76 @@ import {
   Easing,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-
+import LottieTabIcon from '../component/lottieTabIcon'
 const { width } = Dimensions.get('window');
 
 const WaterDropTabBar = ({ state, descriptors, navigation }) => {
-  // Store the previous and current tab index
   const [prevIndex, setPrevIndex] = useState(state.index);
   
-  // Animation value for the water drop position
-  const dropPosition = useRef(new Animated.Value(state.index * (width / state.routes.length))).current;
+  const tabBarWidth = width * 0.9;
+  const marginHorizontal = (width - tabBarWidth) / 2;
   
-  // Animation values for more complex water drop animation
-  const dropScale = useRef(new Animated.Value(1)).current;
+  const dropPosition = useRef(new Animated.Value(state.index * (tabBarWidth / state.routes.length))).current;
+  const dropScale = useRef(new Animated.Value(1.5)).current;
   const dropStretch = useRef(new Animated.Value(1)).current;
   const dropOpacity = useRef(new Animated.Value(0.6)).current;
   
-  // Update position when tab changes
+  const iconScales = useRef(
+    state.routes.map((_, i) => new Animated.Value(i === state.index ? 1.2 : 1))
+  ).current;
+  
+  const iconTranslateYs = useRef(
+    state.routes.map((_, i) => new Animated.Value(i === state.index ? -8 : 0))
+  ).current;
+  
+  useEffect(() => {
+    Animated.parallel([
+      Animated.spring(iconScales[state.index], {
+        toValue: 1.9,
+        friction: 5,
+        tension: 300,
+        useNativeDriver: true,
+      }),
+      Animated.spring(iconTranslateYs[state.index], {
+        toValue: -15,
+        friction: 5,
+        tension: 300,
+        useNativeDriver: true,
+      }),
+      Animated.spring(dropPosition, {
+        toValue: state.index * (tabBarWidth / state.routes.length),
+        friction: 5,
+        tension: 300,
+        useNativeDriver: true,
+      })
+    ]).start();
+  }, []);
+  
   useEffect(() => {
     if (prevIndex !== state.index) {
-      // Calculate direction of movement
       const movingRight = state.index > prevIndex;
       
-      // Enhanced animation sequence
+      state.routes.forEach((_, i) => {
+        const toScale = i === state.index ? 1.9 : 1;
+        const toTranslateY = i === state.index ? -15 : 0;
+        
+        Animated.parallel([
+          Animated.spring(iconScales[i], {
+            toValue: toScale,
+            friction: 5,
+            tension: 300,
+            useNativeDriver: true,
+          }),
+          Animated.spring(iconTranslateYs[i], {
+            toValue: toTranslateY,
+            friction: 5,
+            tension: 300,
+            useNativeDriver: true,
+          })
+        ]).start();
+      });
+      
       Animated.sequence([
-        // Initial preparation - slightly compress and increase opacity
         Animated.parallel([
           Animated.timing(dropScale, {
             toValue: 0.9,
@@ -40,7 +86,7 @@ const WaterDropTabBar = ({ state, descriptors, navigation }) => {
             easing: Easing.out(Easing.cubic),
           }),
           Animated.timing(dropStretch, {
-            toValue: movingRight ? 1.3 : 0.7, // Stretch horizontally in direction of movement
+            toValue: movingRight ? 1.3 : 0.7,
             duration: 200,
             useNativeDriver: true,
             easing: Easing.out(Easing.cubic),
@@ -51,27 +97,23 @@ const WaterDropTabBar = ({ state, descriptors, navigation }) => {
             useNativeDriver: true,
           }),
         ]),
-        
-        // Main movement with acceleration and stretching
         Animated.parallel([
           Animated.timing(dropPosition, {
-            toValue: state.index * (width / state.routes.length),
+            toValue: state.index * (tabBarWidth / state.routes.length),
             duration: 400,
             useNativeDriver: true,
-            easing: Easing.bezier(0.25, 0.1, 0.25, 1), // Improved acceleration curve
+            easing: Easing.bezier(0.25, 0.1, 0.25, 1),
           }),
           Animated.timing(dropStretch, {
-            toValue: movingRight ? 0.7 : 1.3, // Change stretch direction during movement
+            toValue: movingRight ? 0.7 : 1.3,
             duration: 300,
             useNativeDriver: true,
             easing: Easing.in(Easing.cubic),
           }),
         ]),
-        
-        // Final settling animation
         Animated.parallel([
           Animated.spring(dropScale, {
-            toValue: 1,
+            toValue: 1.5,
             friction: 5,
             tension: 300,
             useNativeDriver: true,
@@ -92,98 +134,51 @@ const WaterDropTabBar = ({ state, descriptors, navigation }) => {
       
       setPrevIndex(state.index);
     }
-  }, [state.index, dropPosition, dropScale, dropStretch, dropOpacity, prevIndex]);
+  }, [state.index]);
 
-  // Calculate tabWidth based on number of tabs
-  const tabWidth = width / state.routes.length;
+  const tabWidth = tabBarWidth / state.routes.length;
   
-  // Get icons for tabs
   const getTabIcon = (routeName, isFocused) => {
     const iconMap = {
-      Home: isFocused ? 'home' : 'home-outline',
+      Luvu: isFocused ? 'home' : 'home-outline',
       Profile: isFocused ? 'person' : 'person-outline',
-      Settings: isFocused ? 'settings' : 'settings-outline',
-      Favorites: isFocused ? 'heart' : 'heart-outline',
+      Comment: isFocused ? 'settings' : 'settings-outline',
     };
     
     return iconMap[routeName] || 'apps';
   };
 
   return (
-    <View style={styles.container}>
-      {/* Water drop indicator */}
+    <View style={[styles.container, { width: tabBarWidth, marginHorizontal }]}> 
       <Animated.View
         style={[
           styles.waterDrop,
           {
             opacity: dropOpacity,
             transform: [
-              { 
-                translateX: Animated.add(
-                  dropPosition, 
-                  new Animated.Value(tabWidth / 2 - 20) // Center on tab - half of bubble width
-                ) 
-              },
+              { translateX: Animated.add(dropPosition, new Animated.Value(tabWidth / 2 - 25)) },
               { scale: dropScale },
-              { scaleX: dropStretch }, // Horizontal stretching for water drop effect
+              { scaleX: dropStretch },
             ],
           },
         ]}
       />
-      
-      {/* Tab buttons */}
       <View style={styles.tabs}>
         {state.routes.map((route, index) => {
-          const { options } = descriptors[route.key];
-          const label = options.tabBarLabel || options.title || route.name;
           const isFocused = state.index === index;
-
-          const onPress = () => {
-            const event = navigation.emit({
-              type: 'tabPress',
-              target: route.key,
-              canPreventDefault: true,
-            });
-
-            if (!isFocused && !event.defaultPrevented) {
-              navigation.navigate(route.name);
-            }
-          };
-
-          // Animation for icon scaling and color
-          const iconScale = useRef(new Animated.Value(isFocused ? 1.1 : 1)).current;
           
-          useEffect(() => {
-            Animated.spring(iconScale, {
-              toValue: isFocused ? 1.1 : 1,
-              friction: 5,
-              tension: 300,
-              useNativeDriver: true,
-            }).start();
-          }, [isFocused]);
-
           return (
             <TouchableOpacity
               key={route.key}
-              accessibilityRole="button"
-              accessibilityState={isFocused ? { selected: true } : {}}
-              accessibilityLabel={options.tabBarAccessibilityLabel}
-              testID={options.tabBarTestID}
-              onPress={onPress}
+              onPress={() => {navigation.navigate(route.name), console.log(route.name)}}
               style={[styles.tab, { width: tabWidth }]}
             >
               <Animated.View 
-                style={[
-                  styles.iconContainer,
-                  {
-                    transform: [{ scale: iconScale }]
-                  }
-                ]}
+                style={{ transform: [{ scale: iconScales[index] }, { translateY: iconTranslateYs[index] }] }}
               >
-                <Ionicons 
-                  name={getTabIcon(route.name, isFocused)} 
-                  size={24} 
-                  color={isFocused ? '#2E86DE' : '#8395A7'} 
+                <LottieTabIcon
+                  routeName={route.name}
+                  isFocused={isFocused}
                 />
               </Animated.View>
             </TouchableOpacity>
@@ -207,6 +202,9 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: -2 },
     shadowOpacity: 0.1,
     shadowRadius: 3,
+    borderRadius: 30,
+    marginTop: 5,
+    marginBottom: 10,
   },
   tabs: {
     flexDirection: 'row',
@@ -225,12 +223,12 @@ const styles = StyleSheet.create({
   },
   waterDrop: {
     position: 'absolute',
-    width: 40,
-    height: 40,
+    width: 50,
+    height: 60,
     borderRadius: 20,
     backgroundColor: 'rgba(46, 134, 222, 0.2)',
-    top: 10,
     zIndex: -1,
+    top: -28
   },
 });
 
